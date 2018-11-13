@@ -1,0 +1,43 @@
+.log-table-expand {
+    display: block;
+    overflow-y: scroll;
+
+    width: 100%;
+    max-height: 400px;
+
+    .each-log {
+        padding-top: 10px;
+
+        border-bottom: 1px solid #dedede;
+
+        p {
+            line-height: 46px;
+
+            padding-left: 40px;
+
+            span {
+                font-weight: 600;
+            }
+        }
+
+        .title {
+            display: flex;
+
+            .state {
+                margin-left: 50px;
+                padding: 2px 6px;
+
+                color: #fff;
+                border-radius: 6px;
+            }
+
+            .state-important {
+                background-color: #ed3f14;
+            }
+
+            .state-common {
+                background-color: #2d8cf0;
+            }
+        }
+    }
+}

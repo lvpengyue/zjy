@@ -1,0 +1,50 @@
+.own-space {
+    &-btn-box {
+        margin-bottom: 10px;
+        button {
+            padding-left: 0;
+            span {
+                transition: all 0.2s;
+
+                color: #2d8cf0;
+            }
+            span:hover {
+                transition: all 0.2s;
+
+                color: #0c25f1;
+            }
+        }
+    }
+    &-tra {
+        position: absolute;
+        z-index: 100;
+        top: 50%;
+        left: -3px;
+
+        width: 10px;
+        height: 10px;
+        margin-top: -6px;
+
+        transform: rotate(45deg);
+
+        background-color: white;
+        box-shadow: 0 0 2px 3px rgba(0,0,0,0.1);
+    }
+    &-input-identifycode-con {
+        position: absolute;
+        top: 50%;
+        right: -220px;
+
+        width: 200px;
+        height: 100px;
+        margin-top: -50px;
+
+        border-radius: 4px;
+        box-shadow: 0 0 2px 3px rgba(0,0,0,0.1);
+    }
+
+    .ivu-input-wrapper,
+    .ivu-cascader {
+        width: 360px;
+    }
+}
