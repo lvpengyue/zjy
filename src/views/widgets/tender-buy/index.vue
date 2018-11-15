@@ -3,74 +3,77 @@
         <Row>
             <Col span="24">
             <Card>
-                <Form ref="comparisonForm"
-                      :model="formValidate1"
+                <Form ref="contractForm"
+                      :model="formValidateBuy"
                       :label-width="100"
                       label-position="right"
-                      :rules="ruleValidate1">
-                    <FormItem label="询价员"
-                              prop="">
-                        <Input v-model="formValidate1.inquiryOfficer"
-                               placeholder="询价员"></Input>
+                      :rules="ruleValidateBuy">
+                    <FormItem label="合同名称"
+                              prop="contractName">
+                        <Input v-model="formValidateBuy.contractName"
+                               placeholder="合同名称"></Input>
                     </FormItem>
 
-                    <FormItem label="询价单位"
+                    <FormItem label="合同类型"
                               prop="">
-                        <Input v-model="formValidate1.inquiryUnit"
-                               placeholder="询价单位"></Input>
+                        <Input v-model="formValidateBuy.contractType"
+                               placeholder="合同类型"></Input>
                     </FormItem>
-                    <FormItem label="供货单位"
+                    <FormItem label="合同编号"
                               prop="">
-                        <Input v-model="formValidate1.supplyUnit"
-                               placeholder="供货单位"></Input>
+                        <Input v-model="formValidateBuy.contractNumber"
+                               placeholder="合同编号"></Input>
+                    </FormItem>
+                    <FormItem label="合同金额"
+                              prop="">
+                        <Input v-model="formValidateBuy.contractAmount"
+                               placeholder="合同金额"></Input>
+                    </FormItem>
+                    <FormItem label="合作单位"
+                              prop="">
+                        <Input v-model="formValidateBuy.cooperationUnit"
+                               placeholder="合作单位"></Input>
+                    </FormItem>
+                    <FormItem label="签订日期"
+                              prop="">
+                        <DatePicker type="date" v-model="formValidateBuy.signTime" placeholder="请选择签订日期" format="yyyy-MM-dd"></DatePicker>
+                    </FormItem>
+                    <FormItem label="支付方式"
+                              prop="">
+                        <Input v-model="formValidateBuy.payment"
+                               placeholder="支付方式"></Input>
+                    </FormItem>
+                    <FormItem label="工期"
+                              prop="">
+                        <Input v-model="formValidateBuy.limitTime"
+                               placeholder="工期"></Input>
+                    </FormItem>
+                    <FormItem label="未付款项"
+                              prop="">
+                        <Input v-model="formValidateBuy.unpaidItem"
+                               placeholder="未付款项"></Input>
+                    </FormItem>
+                    <FormItem label="工程验收"
+                              prop="">
+                        <Input v-model="formValidateBuy.projectAccept"
+                               placeholder="工程验收"></Input>
+                    </FormItem>
+                    <FormItem label="质保金金额"
+                              prop="">
+                        <Input v-model="formValidateBuy.qualityGuaranteeDepositAmount"
+                               placeholder="质保金金额"></Input>
                     </FormItem>
                     <FormItem label="备注"
                               prop="">
-                        <Input v-model="formValidate1.remark"
+                        <Input v-model="formValidateBuy.remark"
                                type="textarea"
                                :autosize="{minRows: 2,maxRows: 5}"
                                placeholder=""></Input>
                     </FormItem>
-                    <FormItem label="需求计划"
-                              class="img-wrap"
-                              prop="">
-                        <Avatar :src="formValidate1.imgUrl" v-if="formValidate1.demandPlan" style="width: 60px; height: 60px; margin: 0 20px;"></Avatar> 
-                        <Upload :action="`${conf.baseUrl}/img/upload`"
-                            :on-success="handleSuccess1"
-                            :format="['jpg','jpeg','png']"
-                            :on-format-error="handleFormatError"                            
-                            :show-upload-list="false">
-                            <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
-                        </Upload>
-                    </FormItem>
-                    <FormItem label="采购计划"
-                              class="img-wrap"
-                              prop="">
-                        <Avatar :src="formValidate1.imgUrl" v-if="formValidate1.procurementPlan" style="width: 60px; height: 60px; margin: 0 20px;"></Avatar> 
-                        <Upload :action="`${conf.baseUrl}/img/upload`"
-                            :on-success="handleSuccess2"
-                            :format="['jpg','jpeg','png']"
-                            :on-format-error="handleFormatError"                            
-                            :show-upload-list="false">
-                            <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
-                        </Upload>
-                    </FormItem>
-                    <FormItem label="询价单"
-                              prop="">
-                        <Button type="primary" class="tender-btn">详情</Button>
-                    </FormItem>
-                    <FormItem label="报价单"
-                              prop="">
-                        <Button type="primary" class="tender-btn">详情</Button>
-                    </FormItem>
-                    <FormItem label="比价情况"
-                              prop="">
-                        <Button type="primary" class="tender-btn">详情</Button>
-                    </FormItem>
                 </Form>
 
                 <div  class="submit-news">
-                    <Button type="primary" :loading="modal_loading" @click="saveEdit('comparisonForm')">提交</Button>
+                    <Button type="primary" :loading="modal_loading" @click="saveEdit('contractForm')">提交</Button>
                 </div>
             </Card>
             </Col>

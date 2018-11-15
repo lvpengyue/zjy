@@ -1,28 +1,108 @@
 <template>
-    <div class="tender-comparison">
+    <div class="tender-payment"
+         v-if="contractTenderPaymentData && contractTenderPaymentData.data">
         <Row>
             <Col span="24">
             <Card>
-                <Form ref="comparisonForm"
+                <div slot="title"
+                     class="card-title">
+                    <!-- <Form inline>
+                        <FormItem>
+                            <Input type="text"
+                                   v-model="search.name"
+                                   placeholder="姓名">
+                            <Icon type="ios-person-outline"
+                                  slot="prepend"></Icon>
+                            </Input>
+                        </FormItem>
+                        <FormItem>
+                            <Button type="primary"
+                                    size="default"
+                                    @click="handleSearch()">搜索</Button>
+                        </FormItem>
+                        <FormItem>
+                            <Button type="default"
+                                    size="default"
+                                    @click="handleReset()">重置</Button>
+                        </FormItem>
+                    </Form> -->
+                    <Button type="primary"
+                            size="default"
+                            @click="handleAdd()">新增人员</Button>
+                </div>
+                <Table :columns="columns"
+                       size="large"
+                       no-data-text="暂无数据"
+                       no-filtered-data-text="没有符合条件的数据"
+                       :data="contractTenderPaymentData.data"></Table>
+                <!-- <Page :total="contractTenderPaymentData.count"
+                      :current="page.pageNum"
+                      show-total
+                      :page-size="page.pageSize"
+                      @on-change="pageNumChange"
+                      @on-page-size-change="pageSizeChange"
+                      size="small"
+                      show-sizer
+                      class-name="page-wrap">
+                    <span slot="">共
+                        <span style="font-size: 20px; color: red; padding: 0 4px;">{{contractTenderPaymentData.count}}</span>条数据</span>
+                </Page> -->
+            </Card>
+            </Col>
+        </Row>
+        <!-- <Modal v-model="addOrEdit"
+               width="500">
+            <p slot="header"
+               style="color:#f60; text-align:center;">
+                <Icon type="information-circled"></Icon>
+                <span>新增/编辑人员信息</span>
+            </p>
+            <div>
+                <Form ref="userForm"
                       :model="formValidate1"
                       :label-width="100"
                       label-position="right"
                       :rules="ruleValidate1">
-                    <FormItem label="询价员"
-                              prop="">
-                        <Input v-model="formValidate1.inquiryOfficer"
-                               placeholder="询价员"></Input>
+                    <FormItem label="账号"
+                              prop="userName">
+                        <Input v-model="formValidate1.userName"
+                               placeholder="请输入账号"></Input>
                     </FormItem>
-
-                    <FormItem label="询价单位"
-                              prop="">
-                        <Input v-model="formValidate1.inquiryUnit"
-                               placeholder="询价单位"></Input>
+                    <FormItem label="密码"
+                              prop="password">
+                        <Input v-model="formValidate1.password"
+                               type="password"
+                               placeholder="请输入密码"></Input>
                     </FormItem>
-                    <FormItem label="供货单位"
-                              prop="">
-                        <Input v-model="formValidate1.supplyUnit"
-                               placeholder="供货单位"></Input>
+                    <FormItem label="真实姓名"
+                              prop="realName">
+                        <Input v-model="formValidate1.realName"
+                               placeholder="请输入账号"></Input>
+                    </FormItem>
+                    <FormItem label="身份证号"
+                              prop="idcard">
+                        <Input v-model="formValidate1.idcard"
+                               placeholder="请输入身份证号"></Input>
+                    </FormItem>
+                    <FormItem label="手机号"
+                              prop="phone">
+                        <Input v-model="formValidate1.phone"
+                               placeholder="请输入手机号"></Input>
+                    </FormItem>
+                    <FormItem label="邮箱"
+                              prop="email">
+                        <Input v-model="formValidate1.email"
+                               placeholder="请输入邮箱"></Input>
+                    </FormItem>
+                    <FormItem label="请选择角色："
+                              prop="roleId">
+                        <Select placeholder="请选择角色"
+                                v-model="formValidate1.roleId"
+                                style="width: 200px;">
+                            <Option v-for="sitem in permissionRoleData.data"
+                                    :value="`${sitem.id}`"
+                                    :key="sitem.id">{{ sitem.name }}</Option>
+                        </Select>
                     </FormItem>
                     <FormItem label="备注"
                               prop="">
@@ -31,57 +111,23 @@
                                :autosize="{minRows: 2,maxRows: 5}"
                                placeholder=""></Input>
                     </FormItem>
-                    <FormItem label="需求计划"
-                              class="img-wrap"
-                              prop="">
-                        <Avatar :src="formValidate1.imgUrl" v-if="formValidate1.demandPlan" style="width: 60px; height: 60px; margin: 0 20px;"></Avatar> 
-                        <Upload :action="`${conf.baseUrl}/img/upload`"
-                            :on-success="handleSuccess1"
-                            :format="['jpg','jpeg','png']"
-                            :on-format-error="handleFormatError"                            
-                            :show-upload-list="false">
-                            <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
-                        </Upload>
-                    </FormItem>
-                    <FormItem label="采购计划"
-                              class="img-wrap"
-                              prop="">
-                        <Avatar :src="formValidate1.imgUrl" v-if="formValidate1.procurementPlan" style="width: 60px; height: 60px; margin: 0 20px;"></Avatar> 
-                        <Upload :action="`${conf.baseUrl}/img/upload`"
-                            :on-success="handleSuccess2"
-                            :format="['jpg','jpeg','png']"
-                            :on-format-error="handleFormatError"                            
-                            :show-upload-list="false">
-                            <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
-                        </Upload>
-                    </FormItem>
-                    <FormItem label="询价单"
-                              prop="">
-                        <Button type="primary" class="tender-btn">详情</Button>
-                    </FormItem>
-                    <FormItem label="报价单"
-                              prop="">
-                        <Button type="primary" class="tender-btn">详情</Button>
-                    </FormItem>
-                    <FormItem label="比价情况"
-                              prop="">
-                        <Button type="primary" class="tender-btn">详情</Button>
-                    </FormItem>
                 </Form>
-
-                <div  class="submit-news">
-                    <Button type="primary" :loading="modal_loading" @click="saveEdit('comparisonForm')">提交</Button>
-                </div>
-            </Card>
-            </Col>
-        </Row>
+            </div>
+            <div slot="footer">
+                <Button type="error"
+                        size="large"
+                        long
+                        :loading="modal_loading"
+                        @click="saveUser('userForm')">确定提交</Button>
+            </div>
+        </Modal> -->
     </div>
 </template>
 
 <style lang="less">
 @import "./index.less";
+@import "../../../styles/common.less";
 
 </style>
-
 <script src="./index.js">
 </script>

@@ -148,7 +148,7 @@ const actions = {
     }, params) {
         try {
             const response = await dispatch('$apisCall', {
-                config: $apiConf.CONPANY_DELETE,
+                config: $apiConf.COMPANY_DELETE,
                 params: params
             });
 

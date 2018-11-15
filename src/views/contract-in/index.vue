@@ -61,15 +61,18 @@
                         </Select>
                     </FormItem>
                     <FormItem label="物资品牌"
-                              prop="brand">
+                              prop="">
                         <Input v-model="formValidate1.brand"
+                               readonly
                                type="text"
                                placeholder="请输入品牌"></Input>
                     </FormItem>
                     <FormItem label="物资价格"
-                              prop="price">
+                              prop="">
                         <Input v-model="formValidate1.price"
-                               placeholder="请输入物资价格"></Input>
+                               readonly
+                               type="text"
+                               placeholder="请输入价格"></Input>
                     </FormItem>
                     <FormItem label="物资数量"
                               prop="number">
@@ -79,7 +82,6 @@
                     <FormItem label="操作人"
                               prop="operator">
                         <Input v-model="formValidate1.operator"
-                               readonly
                                placeholder="请输入操作人"></Input>
                     </FormItem>
                     <FormItem label="物资备注"

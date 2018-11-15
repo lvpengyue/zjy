@@ -105,6 +105,23 @@ export default {
       'contractMaterialAll',
     ])
   },
+  watch: {
+    formValidate1: {
+      handler(newV, oldV) {
+        if (newV.name) {
+          this.contractMaterialAll.data.forEach(item => {
+            if (item.name === this.formValidate1.name) {
+              console.log(item);
+              this.formValidate1.brand = item.brand;
+              this.formValidate1.price = item.price;
+            }
+          })
+          
+        }
+      },
+      deep: true
+    },
+  },
   methods: {
     ...mapActions([
       'contractInGetData',

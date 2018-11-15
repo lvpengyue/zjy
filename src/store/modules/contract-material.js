@@ -138,6 +138,9 @@ const actions = {
                 params: JSON.stringify(params)
             });
 
+
+            console.log(response);
+
             commit({
                 type: CONTRACT_MATERIAL_SET_ADD,
                 payload: response

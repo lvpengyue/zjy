@@ -8,14 +8,94 @@ import {
   import moment from 'moment';
   // require styles
   
-  export default {
+export default {
+    props: {
+        show: {
+            type: Boolean,
+            default: false
+        }
+    },
+
     async mounted() {
         this.userData = JSON.parse(Cookies.get('user'));
         console.log(this.conf);
     },
     data() {
       return {
-          formValidate1: {
+        search: {
+            name: ''
+        },
+        columns: [
+            {
+                title: '用户名',
+                key: 'amount'
+            },
+            {
+                title: '真实姓名',
+                key: 'projectSchedule'
+            },
+            {
+                title: '手机号',
+                key: 'paymentBatch'
+            },
+            {
+                title: '操作',
+                key: 'action',
+                width: 300,
+                align: 'center',
+                render: (h, params) => {
+                return h('div', [
+                    h('Button', {
+                    props: {
+                        type: 'primary',
+                        size: 'default'
+                    },
+                    style: {
+                        marginRight: '5px',
+                        display: 'inline-block'
+                    },
+                    on: {
+                        click: () => {
+                        this.showAndEdit(params.row);
+                        }
+                    }
+                    }, '编辑'),
+                    h('Button', {
+                    props: {
+                        type: 'success',
+                        size: 'default'
+                    },
+                    style: {
+                        marginRight: '5px',
+                        display: 'inline-block'
+                    },
+                    on: {
+                        click: () => {
+                        this.editPassword(params.row);
+                        }
+                    }
+                    }, '重置密码'),
+                    h('Button', {
+                    props: {
+                        type: 'error',
+                        size: 'default'
+                    },
+                    style: {
+                        marginRight: '5px',
+                        display: 'inline-block'
+                        // display: showDel
+                    },
+                    on: {
+                        click: () => {
+                        this.del(params.row.uid);
+                        }
+                    }
+                    }, '删除'),
+                ]);
+                }
+            }
+        ],
+        formValidate1: {
             inquiryOfficer: '', // 询价员
             inquiryUnit: '', // 询价单位
             supplyUnit: '', // 供货单位
@@ -50,12 +130,32 @@ import {
         userData: null,
       };
     },
+    watch: {
+        show(newV) {
+            if (newV) {
+                console.log(newV);
+                // const newObj = JSON.parse(JSON.stringify(this.contractTenderProjectComparisonData.data));
+                // this.formValidate2 = {
+                //     id: newObj.id,
+                //     tenderProjectId: this.contractTenderId,
+                //     inquiryOfficer: newObj.inquiryOfficer, // 询价员
+                //     inquiryUnit: newObj.inquiryUnit, // 询价单位
+                //     supplyUnit: newObj.supplyUnit, // 供货单位
+                //     remark: newObj.remark, // 备注
+                //     demandPlan: newObj.demandPlan, // 需求计划
+                //     procurementPlan: newObj.procurementPlan, // 采购计划
+                // }
+            }
+        }
+    },
     computed: {
       ...mapGetters([
+          'contractTenderPaymentData'
       ])
     },
     methods: {
       ...mapActions([
+          'contractTenderPaymentGetData'
       ]),
   
   

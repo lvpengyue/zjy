@@ -10,11 +10,13 @@ const state = {
      * @type {Object}
      */
     data: '', 
+    add: '',
     edit: '', // 编辑招标项目结果
     del: '', // 删除招标项目
 };
 
 const CONTRACT_TENDER_QUOTATION_SET_DATA = 'CONTRACT_TENDER_QUOTATION_SET_DATA';
+const CONTRACT_TENDER_QUOTATION_SET_ADD = 'CONTRACT_TENDER_QUOTATION_SET_ADD';
 const CONTRACT_TENDER_QUOTATION_SET_EDIT = 'CONTRACT_TENDER_QUOTATION_SET_EDIT';
 const CONTRACT_TENDER_QUOTATION_SET_DEL = 'CONTRACT_TENDER_QUOTATION_SET_DEL';
 
@@ -27,6 +29,15 @@ const mutations = {
      */
     [CONTRACT_TENDER_QUOTATION_SET_DATA](state, mutation) {
         state.data = mutation.payload;
+    },
+
+    /**
+     * 新增数据
+     * @param {Object} state state
+     * @param {FSA} mutation mutation
+     */
+    [CONTRACT_TENDER_QUOTATION_SET_ADD](state, mutation) {
+        state.add = mutation.payload;
     },
 
     /**
@@ -72,6 +83,31 @@ const actions = {
             });
         } catch (error) {
             console.log(`获取招标项目列表数据失败:${error.code}`);
+        }
+    },
+
+    /**
+     * 调用添加招标项目接口
+     * @param {Object} context context
+     * @param {Object} params contact content type
+     */
+    async contractTenderQuotationGetAdd({
+        commit,
+        dispatch,
+        state
+    }, params) {
+        try {
+            const response = await dispatch('$apisCall', {
+                config: $apiConf.QUOTATION_ADD,
+                params: JSON.stringify(params)
+            });
+
+            commit({
+                type: CONTRACT_TENDER_QUOTATION_SET_ADD,
+                payload: response
+            });
+        } catch (error) {
+            console.log(`新增招标项目失败:${error.code}`);
         }
     },
 

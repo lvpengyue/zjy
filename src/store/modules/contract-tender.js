@@ -13,12 +13,14 @@ const state = {
     add: '', // 新增招标项目结果
     edit: '', // 编辑招标项目结果
     del: '', // 删除招标项目
+    id: '', // 默认的当前操作的项目id
 };
 
 const CONTRACT_TENDER_SET_DATA = 'CONTRACT_TENDER_SET_DATA';
 const CONTRACT_TENDER_SET_ADD = 'CONTRACT_TENDER_SET_ADD';
 const CONTRACT_TENDER_SET_EDIT = 'CONTRACT_TENDER_SET_EDIT';
 const CONTRACT_TENDER_SET_DEL = 'CONTRACT_TENDER_SET_DEL';
+const CONTRACT_TENDER_SET_ID = 'CONTRACT_TENDER_SET_ID';
 
 const mutations = {
 
@@ -57,6 +59,15 @@ const mutations = {
      */
     [CONTRACT_TENDER_SET_DEL](state, mutation) {
         state.del = mutation.payload;
+    },
+
+    /**
+     * 设置当前操作的项目id
+     * @param {Object} state state
+     * @param {FSA} mutation mutation
+     */
+    [CONTRACT_TENDER_SET_ID](state, mutation) {
+        state.id = mutation.payload;
     }
 };
 
@@ -159,6 +170,22 @@ const actions = {
         } catch (error) {
             console.log(`删除招标项目失败:${error.code}`);
         }
+    },
+
+    /**
+     * 设置id
+     * @param {Object} context context
+     * @param {Object} params contact content type
+     */
+    async contractTenderSetId({
+        commit,
+        dispatch,
+        state
+    }, params) {
+        commit({
+            type: CONTRACT_TENDER_SET_ID,
+            payload: params
+        });
     }
 };
 
@@ -198,6 +225,15 @@ const getters = {
      */
     contractTenderDel(state) {
         return state.del;
+    },
+
+    /**
+     * 获取项目id
+     * @param {Object} state state
+     * @return {Object} id 项目id
+     */
+    contractTenderId(state) {
+        return state.id;
     }
 };
 

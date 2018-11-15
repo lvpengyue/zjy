@@ -10,6 +10,7 @@ const state = {
      * @type {Object}
      */
     data: '',
+    add: '',
     edit: '', // 编辑比价结果
     del: '', // 删除比价
 };
@@ -86,6 +87,31 @@ const actions = {
     },
 
     /**
+     * 调用新增比价接口
+     * @param {Object} context context
+     * @param {Object} params contact content type
+     */
+    async contractTenderComparisonGetAdd({
+        commit,
+        dispatch,
+        state
+    }, params) {
+        try {
+            const response = await dispatch('$apisCall', {
+                config: $apiConf.COMPARISON_ADD,
+                params: JSON.stringify(params)
+            });
+
+            commit({
+                type: CONTRACT_TENDER_COMPARISON_SET_ADD,
+                payload: response
+            });
+        } catch (error) {
+            console.log(`新增比价失败:${error.code}`);
+        }
+    },
+
+    /**
      * 调用编辑比价接口
      * @param {Object} context context
      * @param {Object} params contact content type
@@ -149,6 +175,15 @@ const getters = {
 
     /**
      * 新增比价
+     * @param {Object} state state
+     * @return {Object} add 新增
+     */
+    contractTenderComparisonAdd(state) {
+        return state.add;
+    },
+
+    /**
+     * 编辑比价
      * @param {Object} state state
      * @return {Object} add 新增
      */

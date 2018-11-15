@@ -15,6 +15,15 @@ export default {
     await this.contractMaterialGetAll();
   },
   data() {
+    const valideMaxNumber = (rule, value, callback) => {
+        console.log(this.formValidate1);
+        if (value > this.outObj.number) {
+            callback(new Error('不得输入超过最大库存数的数字'));
+        } else {
+            callback();
+        }
+    };
+
     return {
         formValidate1: {
           brand: '',
@@ -40,7 +49,8 @@ export default {
               { required: true, message: '操作人不得为空', trigger: 'blur' }
           ],
           number: [
-              { required: true, message: '物资数量不得为空', trigger: 'blur' }
+              { required: true, message: '出库数量不得为空', trigger: 'blur' },
+              { validator: valideMaxNumber }
           ],
           agent: [
               { required: true, message: '经办人不得为空', trigger: 'blur' }
@@ -49,6 +59,7 @@ export default {
       addOrEdit: false, // 新增或编辑框是否出现
       modal_loading: false,
       userData: null,
+      outObj: '', // 出库的对象
       page: {
         pageNumber: 1,
         pageSize: 10
@@ -119,6 +130,7 @@ export default {
         if (newV.name) {
           this.contractMaterialAll.data.forEach(item => {
             if (item.name === this.formValidate1.name) {
+              this.outObj = item;
               console.log(item);
               this.formValidate1.brand = item.brand;
               this.formValidate1.price = item.price;

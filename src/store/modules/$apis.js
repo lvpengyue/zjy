@@ -142,7 +142,7 @@ const actions = {
                 response = config.format(response);
             }
 
-            if (response.code === 0) {
+            if (response.code !== null) {
                 commit({
                     type: $APIS_CALL,
                     payload: {

@@ -52,6 +52,7 @@
                     <FormItem label="物资名称"
                               prop="name">
                         <Input v-model="formValidate1.name"
+                               :disabled="action === 'edit'"
                                placeholder="请输入物资名称"></Input>
                     </FormItem>
                     <FormItem label="物资品牌"
@@ -64,16 +65,6 @@
                               prop="">
                         <Input v-model="formValidate1.price"
                                placeholder="请输入物资价格"></Input>
-                    </FormItem>
-                    <FormItem label="物资数量"
-                              prop="">
-                        <Input v-model="formValidate1.number"
-                               placeholder="请输入身份证号"></Input>
-                    </FormItem>
-                    <FormItem label="操作人"
-                              prop="librarian">
-                        <Input v-model="formValidate1.librarian"
-                               placeholder="请输入操作人"></Input>
                     </FormItem>
                     <FormItem label="物资备注"
                               prop="">

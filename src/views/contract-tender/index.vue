@@ -92,16 +92,16 @@
                      class="card-title">
                     <Tabs type="card" v-model="tabName">
                         <TabPane label="项目询比价单" name="comparison">
-                            <tender-comparison></tender-comparison>
+                            <tender-comparison :show="showProjectComparison"></tender-comparison>
                         </TabPane>
                         <TabPane label="项目物资采购" name="buy">
-                            <tender-buy></tender-buy>
+                            <tender-buy :show="showBuy"></tender-buy>
                         </TabPane>
                         <TabPane label="项目付款进度" name="pay">
-                            <tender-payment></tender-payment>
+                            <tender-payment :show="showPayment"></tender-payment>
                         </TabPane>
                         <TabPane label="项目资料上传" name="material">
-                            <tender-upload></tender-upload>
+                            <tender-upload :show="showUpload"></tender-upload>
                         </TabPane>
                     </Tabs>
                 </div>
@@ -113,5 +113,3 @@
 
 <script src="./index.js">
 </script>
-
-<style>

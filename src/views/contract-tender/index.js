@@ -42,7 +42,8 @@ export default {
         }
     };
     return {
-        formValidate1: {
+      projectId: '',
+      formValidate1: {
           id: '',
           name: '',
       },
@@ -50,6 +51,12 @@ export default {
       action: 'add', // 新增还是编辑  edit
       showIndex: true, // 是否显示首页列表
       tabName: 'comparison', // 显示tab的名称
+
+
+      showProjectComparison: false, // 是否显示询比价单
+      showBuy: false,
+      showPayment: false,
+      showUpload: false,
 
       ruleValidate1: {
           name: [
@@ -136,7 +143,72 @@ export default {
       'contractTenderAdd',
       'contractTenderEdit',
       'contractTenderDel',
+      'contractTenderProjectComparisonData',
+      'contractTenderContractData',
+      'contractTenderPaymentData',
+      'contractTenderId'
     ])
+  },
+  watch: {
+    async tabName(newV) {
+      switch(newV) {
+        case 'buy':
+          await this.contractTenderContractGetData({
+            id: this.projectId
+          });
+
+          if (this.contractTenderContractData && this.contractTenderContractData.code) {
+            this.$Notice.warning({
+                title: this.contractTenderContractData.data
+            });
+          } else {
+            this.showBuy = true;
+            this.showProjectComparison = false;
+            this.showPayment = false;
+            this.showUpload = false;
+          }
+          break;
+        case 'pay':
+          await this.contractTenderPaymentGetData({
+            id: this.projectId
+          });
+
+          if (this.contractTenderPaymentData && this.contractTenderPaymentData.code) {
+            this.$Notice.warning({
+                title: this.contractTenderPaymentData.data
+            });
+          } else {
+            this.showBuy = false;
+            this.showProjectComparison = false;
+            this.showPayment = true;
+            this.showUpload = false;
+          }
+          
+          break;
+        case 'material':
+          console.log(4);
+          this.showBuy = false;
+          this.showProjectComparison = false;
+          this.showPayment = false;
+          this.showUpload = true;
+          break;
+        default:
+          await this.contractTenderProjectComparisonGetData({
+            id: this.projectId
+          });
+
+          if (this.contractTenderProjectComparisonData && this.contractTenderProjectComparisonData.code) {
+            this.$Notice.warning({
+                title: this.contractTenderProjectComparisonData.data
+            });
+          } else {
+            this.showBuy = false;
+            this.showProjectComparison = true;
+            this.showPayment = false;
+            this.showUpload = false;
+          }
+      }
+    } 
   },
   methods: {
     ...mapActions([
@@ -144,11 +216,31 @@ export default {
       'contractTenderGetAdd',
       'contractTenderGetEdit',
       'contractTenderGetDel',
+      'contractTenderProjectComparisonGetData',
+      'contractTenderInquiryGetData',
+      'contractTenderContractGetData',
+      'contractTenderPaymentGetData',
+      'contractTenderSetId'
     ]),
 
     // 查看项目详情
-    showDetail(row) {
+    async showDetail(row) {
+      this.projectId = row.id;
+      this.contractTenderSetId(row.id);
       this.showIndex = false;
+      // 默认调用招投标接口
+      await this.contractTenderProjectComparisonGetData({
+        id: row.id
+      });
+     
+
+      if (this.contractTenderProjectComparisonData && this.contractTenderProjectComparisonData.code) {
+        this.$Notice.warning({
+            title: this.contractTenderProjectComparisonData.data
+        });
+      } else {
+        this.showProjectComparison = true;
+      }
     },
 
     handleAdd() {

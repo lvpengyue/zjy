@@ -17,8 +17,7 @@ export default {
         formValidate1: {
           id: '',
           brand: '',
-          librarian: '',
-          name: '',
+          name: 0,
           number: '',
           price: '',
           remark: ''
@@ -32,9 +31,6 @@ export default {
           ],
           brand: [
               { required: true, message: '物资品牌不得为空', trigger: 'blur' }
-          ],
-          librarian: [
-              { required: true, message: '操作人不得为空', trigger: 'blur' }
           ]
       },
       addOrEdit: false, // 新增或编辑框是否出现
@@ -64,20 +60,8 @@ export default {
           key: 'brand'
         },
         {
-          title: '入库人员',
-          key: 'librarian'
-        },
-        {
           title: '物资备注',
           key: 'remark'
-        },
-        {
-          title: '入库时间',
-          key: 'storageTime'
-        },
-        {
-          title: '出库时间',
-          key: 'outageTime'
         },
         {
           title: '操作',
@@ -149,8 +133,7 @@ export default {
       this.formValidate1 = {
         id: '',
         brand: '',
-        librarian: '',
-        name: '',
+        name: 0,
         number: '',
         price: '',
         remark: ''
@@ -167,11 +150,12 @@ export default {
                   await this.contractMaterialGetAdd(this.formValidate1);
 
                   if (this.contractMaterialAdd && this.contractMaterialAdd.code) {
+                      this.modal_loading = false;
                       this.$Notice.warning({
-                          title: '新增失败'
+                          title: this.contractMaterialAdd.data
                       });
                       this.modal_loading = false;
-                  } else {
+                  } else if (this.contractMaterialAdd && !this.contractMaterialAdd.code) {
                       this.modal_loading = false;
                       this.addOrEdit = false;
                       this.$Notice.success({
@@ -184,8 +168,9 @@ export default {
                   await this.contractMaterialGetEdit(this.formValidate1);
 
                   if (this.contractMaterialEdit && this.contractMaterialEdit.code) {
+                      this.modal_loading = false;
                       this.$Notice.warning({
-                          title: '修改失败'
+                          title: this.contractMaterialEdit.data
                       });
                       this.modal_loading = false;
                   } else {
@@ -238,7 +223,6 @@ export default {
       this.formValidate1 = {
         id: row.id,
         brand: row.brand,
-        librarian: row.librarian,
         name: row.name,
         number: row.number,
         price: row.price,

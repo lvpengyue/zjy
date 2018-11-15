@@ -17,6 +17,13 @@ import contractMaterial from './modules/contract-material';
 import contractIn from './modules/contract-in';
 import contractOut from './modules/contract-out';
 import contractTender from './modules/contract-tender';
+import contractTenderCompany from './modules/contract-tender-company';
+import contractTenderComparison from './modules/contract-tender-comparison';
+import contractTenderContract from './modules/contract-tender-contract';
+import contractTenderInquiry from './modules/contract-tender-inquiry';
+import contractTenderPayment from './modules/contract-tender-payment';
+import contractTenderProjectComparison from './modules/contract-tender-project-comparison';
+import contractTenderQuotation from './modules/contract-tender-quotation';
 
 Vue.use(Vuex);
 
@@ -46,7 +53,14 @@ const store = new Vuex.Store({
         contractMaterial,
         contractIn,
         contractOut,
-        contractTender
+        contractTender,
+        contractTenderCompany,
+        contractTenderComparison,
+        contractTenderContract,
+        contractTenderInquiry,
+        contractTenderPayment,
+        contractTenderProjectComparison,
+        contractTenderQuotation
     }
 });
 

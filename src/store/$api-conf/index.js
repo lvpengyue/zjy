@@ -716,13 +716,30 @@ export default {
     },
 
     /*
-        编辑询比价
+        新增询比价
     */
     PROJECT_COMPARISON_ADD: {
         name: 'PROJECT_COMPARISON_ADD',
 
         proxy: {
             url: `${baseUrl}/projectcomparison/add`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+
+    /*
+        编辑询比价
+    */
+    PROJECT_COMPARISON_EDIT: {
+        name: 'PROJECT_COMPARISON_EDIT',
+
+        proxy: {
+            url: `${baseUrl}/projectcomparison/edit`,
             method: 'POST',
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
@@ -760,6 +777,23 @@ export default {
             url: `${baseUrl}/inquiry/get`,
             method: 'GET',
             dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+
+    /*
+        新增询价
+    */
+    INQUIRY_ADD: {
+        name: 'INQUIRY_ADD',
+
+        proxy: {
+            url: `${baseUrl}/inquiry/add`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
             xhrFields: {
                 withCredentials: true
             }
@@ -818,6 +852,23 @@ export default {
     },
 
     /*
+        添加报价
+    */
+    QUOTATION_ADD: {
+        name: 'QUOTATION_ADD',
+
+        proxy: {
+            url: `${baseUrl}/quotation/add`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+
+    /*
         编辑报价
     */
     QUOTATION_EDIT: {
@@ -862,6 +913,23 @@ export default {
             url: `${baseUrl}/comparison/get`,
             method: 'GET',
             dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+
+    /*
+        新增比价
+    */
+    COMPARISON_ADD: {
+        name: 'COMPARISON_ADD',
+
+        proxy: {
+            url: `${baseUrl}/comparison/add`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
             xhrFields: {
                 withCredentials: true
             }
@@ -981,6 +1049,23 @@ export default {
             url: `${baseUrl}/contract/get`,
             method: 'GET',
             dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+
+    /*
+        新增合同
+    */
+    CONTRACT_ADD: {
+        name: 'CONTRACT_ADD',
+
+        proxy: {
+            url: `${baseUrl}/contract/add`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
             xhrFields: {
                 withCredentials: true
             }

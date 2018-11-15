@@ -11,11 +11,13 @@ const state = {
      */
     data: '',
     add: '', // 编辑招标询比价结果
+    edit: '', // 编辑招标询比价结果
     del: '', // 删除招标询比价
 };
 
 const CONTRACT_TENDER_PROJECT_COMPARISON_SET_DATA = 'CONTRACT_TENDER_PROJECT_COMPARISON_SET_DATA';
 const CONTRACT_TENDER_PROJECT_COMPARISON_SET_ADD = 'CONTRACT_TENDER_PROJECT_COMPARISON_SET_ADD';
+const CONTRACT_TENDER_PROJECT_COMPARISON_SET_EDIT = 'CONTRACT_TENDER_PROJECT_COMPARISON_SET_EDIT';
 const CONTRACT_TENDER_PROJECT_COMPARISON_SET_DEL = 'CONTRACT_TENDER_PROJECT_COMPARISON_SET_DEL';
 
 const mutations = {
@@ -30,12 +32,21 @@ const mutations = {
     },
 
     /**
-     * 编辑数据
+     * 新增数据
      * @param {Object} state state
      * @param {FSA} mutation mutation
      */
     [CONTRACT_TENDER_PROJECT_COMPARISON_SET_ADD](state, mutation) {
         state.add = mutation.payload;
+    },
+
+    /**
+     * 编辑数据
+     * @param {Object} state state
+     * @param {FSA} mutation mutation
+     */
+    [CONTRACT_TENDER_PROJECT_COMPARISON_SET_EDIT](state, mutation) {
+        state.edit = mutation.payload;
     },
 
     /**
@@ -75,7 +86,7 @@ const actions = {
     },
 
     /**
-     * 调用编辑招标询比价接口
+     * 调用新增招标询比价接口
      * @param {Object} context context
      * @param {Object} params contact content type
      */
@@ -92,6 +103,31 @@ const actions = {
 
             commit({
                 type: CONTRACT_TENDER_PROJECT_COMPARISON_SET_ADD,
+                payload: response
+            });
+        } catch (error) {
+            console.log(`编辑招标询比价失败:${error.code}`);
+        }
+    },
+
+     /**
+     * 调用编辑招标询比价接口
+     * @param {Object} context context
+     * @param {Object} params contact content type
+     */
+    async contractTenderProjectComparisonGetEdit({
+        commit,
+        dispatch,
+        state
+    }, params) {
+        try {
+            const response = await dispatch('$apisCall', {
+                config: $apiConf.PROJECT_COMPARISON_EDIT,
+                params: JSON.stringify(params)
+            });
+
+            commit({
+                type: CONTRACT_TENDER_PROJECT_COMPARISON_SET_EDIT,
                 payload: response
             });
         } catch (error) {
@@ -137,12 +173,21 @@ const getters = {
     },
 
     /**
-     * 编辑招标询比价
+     * 新增招标询比价
      * @param {Object} state state
      * @return {Object} add 编辑
      */
     contractTenderProjectComparisonAdd(state) {
         return state.add;
+    },
+
+    /**
+     * 编辑招标询比价
+     * @param {Object} state state
+     * @return {Object} add 编辑
+     */
+    contractTenderProjectComparisonEdit(state) {
+        return state.edit;
     },
 
     /**
