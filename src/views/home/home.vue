@@ -19,8 +19,8 @@
                                 <Col span="16" style="padding-left:6px;">
                                     <Row class-name="made-child-con-middle" type="flex" align="middle">
                                         <div v-show="userData">
-                                            <b class="card-user-infor-name">{{userData.realName}}</b>
-                                            <p>{{userData.roleId}}</p>
+                                            <b class="card-user-infor-name">{{userData.realname}}</b>
+                                            <p>{{userData.userName}}</p>
                                         </div>
                                     </Row>
                                 </Col>

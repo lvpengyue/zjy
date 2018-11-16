@@ -202,13 +202,14 @@ export default {
     /*
         分配权限
     */
-    ERP_ALLOCATE_PERMISSION: {
-        name: 'ERP_ALLOCATE_PERMISSION',
+    ROLE_ALLOCATE: {
+        name: 'ROLE_ALLOCATE',
 
         proxy: {
-            url: `${baseUrl}/api/factory/allocatePermission`,
-            method: 'POST',
+            url: `${baseUrl}/role/allocate`,
+            method: 'GET',
             dataType: 'json',
+            // contentType: 'application/json; charset=UTF-8',
             xhrFields: {
                 withCredentials: true
             }
@@ -282,12 +283,12 @@ export default {
     /*
         权限列表
     */
-    ERP_PERMISSION_LIST: {
-        name: 'ERP_PERMISSION_LIST',
+    RESOURCE_GET: {
+        name: 'RESOURCE_GET',
 
         proxy: {
-            url: `${baseUrl}/api/factory/permissionList`,
-            method: 'POST',
+            url: `${baseUrl}/resource/get`,
+            method: 'GET',
             dataType: 'json',
             xhrFields: {
                 withCredentials: true
@@ -296,13 +297,31 @@ export default {
     },
 
     /*
-        增加/修改权限资源
+        增加权限资源
     */
-    ERP_ADD_PERMISSION: {
-        name: 'ERP_ADD_PERMISSION',
+    RESOURCE_ADD: {
+        name: 'RESOURCE_ADD',
 
         proxy: {
-            url: `${baseUrl}/api/factory/addPermission`,
+            url: `${baseUrl}/resource/add`,
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+
+    /*
+        修改权限资源
+    */
+    RESOURCE_EDIT: {
+        name: 'RESOURCE_EDIT',
+
+        proxy: {
+            url: `${baseUrl}/resource/edit`,
+            contentType: 'application/json; charset=UTF-8',
             method: 'POST',
             dataType: 'json',
             xhrFields: {
@@ -314,12 +333,12 @@ export default {
     /*
         删除权限资源
     */
-    ERP_DELETE_PERMISSION: {
-        name: 'ERP_DELETE_PERMISSION',
+    RESOURCE_DELETE: {
+        name: 'RESOURCE_DELETE',
 
         proxy: {
-            url: `${baseUrl}/api/factory/deletePermission`,
-            method: 'POST',
+            url: `${baseUrl}/resource/delete`,
+            method: 'GET',
             dataType: 'json',
             xhrFields: {
                 withCredentials: true
@@ -1130,7 +1149,7 @@ export default {
         name: 'PAYMENT_ADD',
 
         proxy: {
-            url: `${baseUrl}/payment/edit`,
+            url: `${baseUrl}/payment/add`,
             method: 'POST',
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
@@ -1165,6 +1184,38 @@ export default {
 
         proxy: {
             url: `${baseUrl}/payment/delete`,
+            method: 'GET',
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+
+    // ----------------------------------文件上传下载------------------------------------
+    /*
+        获取文件下载列表
+    */
+    FILE_GET: {
+        name: 'FILE_GET',
+
+        proxy: {
+            url: `${baseUrl}/file/get`,
+            method: 'GET',
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            }
+        }
+    },
+    /*
+        文件删除
+    */
+    FILE_DELETE: {
+        name: 'FILE_DELETE',
+
+        proxy: {
+            url: `${baseUrl}/file/delete`,
             method: 'GET',
             dataType: 'json',
             xhrFields: {

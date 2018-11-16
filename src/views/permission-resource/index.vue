@@ -2,11 +2,6 @@
 @import "../../styles/common.less";
 @import "./index.less";
 
-
-
-
-
-
 </style>
 <template>
     <div class="agent-list" v-if="permissionResourceData && permissionResourceData.data">
@@ -16,7 +11,6 @@
                 <div slot="title">
                     <Button type="primary"
                         size="default"
-                        v-show="showEdit == 'inline-block'"
                         @click="handleAdd">新增资源</Button>
                 </div>
                 <Table :columns="columns"
@@ -52,9 +46,6 @@
                     </FormItem>
                     <FormItem label="对应页面资源：" prop="url">
                         <Input type="text" v-model="formValidate.url"></Input>
-                    </FormItem>
-                    <FormItem label="权限CODE：">
-                        <Input type="text" v-model="formValidate.value"></Input>
                     </FormItem>
                 </Form>
             </div>

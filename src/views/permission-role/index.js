@@ -10,7 +10,7 @@ import Util from '../../libs/util';
 export default {
   async mounted() {
     this.userData = JSON.parse(Cookies.get('user'));
-    // await this.permissionResourceGetData();
+    await this.permissionResourceGetData();
     await this.getData();
   },
   
@@ -19,8 +19,8 @@ export default {
       canNotSave: true, // 分配权限未操作不得提交
       roleList:  [],
       allocateParams: {
-        roleId: 0,
-        permissionids: []
+        id: 0,
+        permission: []
       },
       allocateList: [], // 分配权限的集合
       editAllocate: false, // 分配权限弹框
@@ -54,14 +54,14 @@ export default {
           title: '角色名称',
           key: 'name'
         },
-        {
-          title: '创建时间',
-          key: 'createTime'
-        },
-        {
-          title: '更新时间',
-          key: 'updateTime'
-        },
+        // {
+        //   title: '创建时间',
+        //   key: 'createTime'
+        // },
+        // {
+        //   title: '更新时间',
+        //   key: 'updateTime'
+        // },
         {
           title: '操作',
           key: 'action',
@@ -141,6 +141,7 @@ export default {
     ]),
 
     getNodes(nodeList) {
+      console.log(nodeList);
       this.allocateList = nodeList;
       this.canNotSave = false;
     },
@@ -153,7 +154,7 @@ export default {
           allocateArr.push(item.url);
         }
       });
-      this.allocateParams.roleId = row.id;
+      this.allocateParams.id = row.id;
       this.editAllocate = true;
       this.allocateList = [];
       const arr = [];
@@ -192,7 +193,8 @@ export default {
       // 对选中权限进行处理
       const arr = [];
       this.allocateList.forEach(item => {
-        if (item.nodeKey !== 0) {
+        console.log(item.nodeKey);
+        if (item.nodeKey) {
           arr.push(item.id);
           arr.push(item.parentId);
         }
@@ -202,15 +204,16 @@ export default {
       const newArr = [];
       // 去掉id为0
       obj.forEach(item => {
-        if (item !== 0) {
+        if (item) {
+          console.log(item)
           newArr.push(item);
         }
       });
-      this.allocateParams.permissionids = newArr;
+      this.allocateParams.permission = JSON.stringify(newArr);
       await this.permissionRoleGetAllocate(this.allocateParams);
-      if (this.permissionRoleAllocate && this.permissionRoleAllocate.code == 0) {
+      if (this.permissionRoleAllocate && this.permissionRoleAllocate.code) {
         this.$Notice.warning({
-            title: this.permissionRoleAllocate.info
+            title: this.permissionRoleAllocate.data
         });
         this.modal_loading = false;
       } else {

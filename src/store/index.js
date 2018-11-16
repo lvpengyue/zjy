@@ -24,6 +24,7 @@ import contractTenderInquiry from './modules/contract-tender-inquiry';
 import contractTenderPayment from './modules/contract-tender-payment';
 import contractTenderProjectComparison from './modules/contract-tender-project-comparison';
 import contractTenderQuotation from './modules/contract-tender-quotation';
+import contractTenderFile from './modules/contract-tender-file';
 
 Vue.use(Vuex);
 
@@ -60,7 +61,8 @@ const store = new Vuex.Store({
         contractTenderInquiry,
         contractTenderPayment,
         contractTenderProjectComparison,
-        contractTenderQuotation
+        contractTenderQuotation,
+        contractTenderFile
     }
 });
 

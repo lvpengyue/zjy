@@ -28,7 +28,7 @@
                     </Form> -->
                     <Button type="primary"
                             size="default"
-                            @click="handleAdd()">新增人员</Button>
+                            @click="handleAdd()">新增付款进度</Button>
                 </div>
                 <Table :columns="columns"
                        size="large"
@@ -50,66 +50,34 @@
             </Card>
             </Col>
         </Row>
-        <!-- <Modal v-model="addOrEdit"
+        <Modal v-model="addOrEdit"
                width="500">
             <p slot="header"
                style="color:#f60; text-align:center;">
                 <Icon type="information-circled"></Icon>
-                <span>新增/编辑人员信息</span>
+                <span>新增/编辑付款进度信息</span>
             </p>
             <div>
-                <Form ref="userForm"
-                      :model="formValidate1"
+                <Form ref="paymentForm"
+                      :model="formValidatePayment"
                       :label-width="100"
                       label-position="right"
-                      :rules="ruleValidate1">
-                    <FormItem label="账号"
-                              prop="userName">
-                        <Input v-model="formValidate1.userName"
-                               placeholder="请输入账号"></Input>
+                      :rules="ruleValidatePayment">
+                    <FormItem label="项目进度"
+                              prop="projectSchedule">
+                        <Input v-model="formValidatePayment.projectSchedule"
+                               placeholder="项目进度"></Input>
                     </FormItem>
-                    <FormItem label="密码"
-                              prop="password">
-                        <Input v-model="formValidate1.password"
-                               type="password"
-                               placeholder="请输入密码"></Input>
+                    <FormItem label="付款批次"
+                              prop="paymentBatch">
+                        <Input v-model="formValidatePayment.paymentBatch"
+                               type="text"
+                               placeholder="付款批次"></Input>
                     </FormItem>
-                    <FormItem label="真实姓名"
-                              prop="realName">
-                        <Input v-model="formValidate1.realName"
-                               placeholder="请输入账号"></Input>
-                    </FormItem>
-                    <FormItem label="身份证号"
-                              prop="idcard">
-                        <Input v-model="formValidate1.idcard"
-                               placeholder="请输入身份证号"></Input>
-                    </FormItem>
-                    <FormItem label="手机号"
-                              prop="phone">
-                        <Input v-model="formValidate1.phone"
-                               placeholder="请输入手机号"></Input>
-                    </FormItem>
-                    <FormItem label="邮箱"
-                              prop="email">
-                        <Input v-model="formValidate1.email"
-                               placeholder="请输入邮箱"></Input>
-                    </FormItem>
-                    <FormItem label="请选择角色："
-                              prop="roleId">
-                        <Select placeholder="请选择角色"
-                                v-model="formValidate1.roleId"
-                                style="width: 200px;">
-                            <Option v-for="sitem in permissionRoleData.data"
-                                    :value="`${sitem.id}`"
-                                    :key="sitem.id">{{ sitem.name }}</Option>
-                        </Select>
-                    </FormItem>
-                    <FormItem label="备注"
-                              prop="">
-                        <Input v-model="formValidate1.remark"
-                               type="textarea"
-                               :autosize="{minRows: 2,maxRows: 5}"
-                               placeholder=""></Input>
+                    <FormItem label="付款金额（元）"
+                              prop="amount">
+                        <Input v-model="formValidatePayment.amount"
+                               placeholder="付款金额（元）"></Input>
                     </FormItem>
                 </Form>
             </div>
@@ -118,9 +86,9 @@
                         size="large"
                         long
                         :loading="modal_loading"
-                        @click="saveUser('userForm')">确定提交</Button>
+                        @click="savePayment('paymentForm')">确定提交</Button>
             </div>
-        </Modal> -->
+        </Modal>
     </div>
 </template>
 

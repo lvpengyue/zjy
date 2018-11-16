@@ -7,18 +7,12 @@ export default {
         row: {
             type: Array
         },
-        showEdit: {
-            type: String
-        },
-        showDel: {
-            type: String
-        }
     },
 
     computed: {
         ...mapGetters([
             'permissionResourceData',
-            'permissionResourceData',
+            'permissionResourceEdit',
             'permissionResourceAdd',
             'permissionResourceDel'
         ])
@@ -32,7 +26,6 @@ export default {
                 name: '', // 权限名称
                 parentId: 0, // 父极权限id
                 url: '', // 对应页面资源
-                value: '' // 权限code
             },
             ruleValidate: {
                 name: [
@@ -58,26 +51,8 @@ export default {
                     key: 'name'
                 },
                 {
-                    title: 'value',
-                    key: 'value'
-                },
-                {
                     title: 'url',
                     key: 'url'
-                },
-                {
-                    title: '创建时间',
-                    key: 'createTime',
-                    render: (h, params) => {
-                        return h('div', new Date(parseInt(params.row.createTime)).toLocaleString());
-                    }
-                },
-                {
-                    title: '更新时间',
-                    key: 'updateTime',
-                    render: (h, params) => {
-                        return h('div', new Date(parseInt(params.row.updateTime)).toLocaleString());
-                    }
                 },
                 {
                     title: '操作',
@@ -92,7 +67,7 @@ export default {
                                 },
                                 style: {
                                     marginRight: '5px',
-                                    display: this.showEdit
+                                    display: 'inline-block'
                                 },
                                 on: {
                                     click: () => {
@@ -107,7 +82,7 @@ export default {
                                 },
                                 style: {
                                     marginRight: '5px',
-                                    display: this.showDel
+                                    display: 'inline-block'
                                 },
                                 on: {
                                     click: () => {
@@ -126,6 +101,7 @@ export default {
         ...mapActions([
             'permissionResourceGetAdd',
             'permissionResourceGetData',
+            'permissionResourceGetEdit',
             'permissionResourceGetDel'
         ]),
 
@@ -137,7 +113,6 @@ export default {
                 name: row.name, // 权限名称
                 parentId: row.parentId, // 父极权限id
                 url: row.url, // 对应页面资源
-                value: row.value // 权限code
             };
             this.editResource = true;
         },
@@ -153,7 +128,7 @@ export default {
             okText: '确定',
             onOk: async () => {
             await this.permissionResourceGetDel(params);
-            if (this.permissionResourceDel && this.permissionResourceDel.code == 1) {
+            if (this.permissionResourceDel && !this.permissionResourceDel.code) {
                 this.$Message.success('删除成功');
                 await this.getData();
             } else {
@@ -169,11 +144,11 @@ export default {
             this.$refs[name].validate(async (valid) => {
                 if (valid) {
                     this.modal_loading = true;
-                    await this.permissionResourceGetAdd(this.formValidate);
+                    await this.permissionResourceGetEdit(this.formValidate);
     
-                    if (this.permissionResourceAdd && this.permissionResourceAdd.code == 0) {
+                    if (this.permissionResourceEdit && this.permissionResourceEdit.code) {
                         this.$Notice.warning({
-                            title: this.permissionResourceAdd.info
+                            title: this.permissionResourceEdit.info
                         });
                         this.modal_loading = false;
                     } else {
@@ -189,7 +164,7 @@ export default {
         // 获取数据的统一方法
         async getData() {
             await this.permissionResourceGetData();
-            if (this.permissionResourceData && this.permissionResourceData.code == 0) {
+            if (this.permissionResourceData && this.permissionResourceData.code) {
                 this.$Notice.warning({
                     title: this.permissionResourceData.info
                 })

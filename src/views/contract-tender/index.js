@@ -146,6 +146,7 @@ export default {
       'contractTenderProjectComparisonData',
       'contractTenderContractData',
       'contractTenderPaymentData',
+      'contractTenderFileData',
       'contractTenderId'
     ])
   },
@@ -186,11 +187,21 @@ export default {
           
           break;
         case 'material':
-          console.log(4);
-          this.showBuy = false;
-          this.showProjectComparison = false;
-          this.showPayment = false;
-          this.showUpload = true;
+          await this.contractTenderFileGetData({
+            id: this.projectId
+          });
+
+          if (this.contractTenderFileData && this.contractTenderFileData.code) {
+            this.$Notice.warning({
+                title: this.contractTenderFileData.data
+            });
+          } else {
+            this.showBuy = false;
+            this.showProjectComparison = false;
+            this.showPayment = false;
+            this.showUpload = true;
+          }
+          
           break;
         default:
           await this.contractTenderProjectComparisonGetData({
@@ -220,6 +231,7 @@ export default {
       'contractTenderInquiryGetData',
       'contractTenderContractGetData',
       'contractTenderPaymentGetData',
+      'contractTenderFileGetData',
       'contractTenderSetId'
     ]),
 

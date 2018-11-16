@@ -31,9 +31,6 @@
                     <FormItem label="对应页面资源：" prop="url">
                         <Input type="text" v-model="formValidate.url"></Input>
                     </FormItem>
-                    <FormItem label="权限CODE：">
-                        <Input type="text" v-model="formValidate.value"></Input>
-                    </FormItem>
                 </Form>
             </div>
             <div slot="footer">
@@ -49,16 +46,6 @@
 
 <style lang="less">
 @import "./index.less";
-
-
-
-
-
-
-
-
-
-
 
 </style>
 

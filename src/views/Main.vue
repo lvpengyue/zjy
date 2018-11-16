@@ -67,6 +67,9 @@
                 </keep-alive>
             </div>
         </div>
+        <div style="font-size: 14px; height: 60px; line-height: 60px; width: 100%; padding-left: 33%; position: fixed; bottom: 0;" :style="{left: shrink?'60px':'200px'}">
+            版权所有 Copyright()2018 甘肃紫金云大数据开发有限责任公司
+        </div>
         <Modal v-model="editPass"
                width="500">
             <p slot="header"

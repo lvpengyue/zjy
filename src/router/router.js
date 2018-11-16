@@ -108,12 +108,12 @@ export const appRouter = [{
         icon: 'ios-cog',
         name: 'permission',
         title: '权限管理',
-        // access: 0,
+        access: 0,
         component: Main,
         children: [{
                 path: 'index',
                 title: '人员列表',
-                // access: 0,
+                access: 0,
                 name: 'permission_index',
                 component: () =>
                     import ('@/views/permission-index/index.vue')
@@ -121,7 +121,7 @@ export const appRouter = [{
             {
                 path: 'role',
                 title: '角色列表',
-                // access: 0,
+                access: 0,
                 name: 'permission_role',
                 component: () =>
                     import ('@/views/permission-role/index.vue')
@@ -129,10 +129,43 @@ export const appRouter = [{
             {
                 path: 'resource',
                 title: '资源列表',
-                // access: 0,
+                access: 0,
                 name: 'permission_resource',
                 component: () =>
                     import ('@/views/permission-resource/index.vue')
+            }
+        ]
+    },
+    {
+        path: '/hr',
+        icon: 'ios-cog',
+        name: 'hr',
+        title: '人力资源管理',
+        access: 0,
+        component: Main,
+        children: [{
+                path: 'user',
+                title: '员工信息目录',
+                access: 0,
+                name: 'hr_user',
+                component: () =>
+                    import ('@/views/hr-user/index.vue')
+            },
+            {
+                path: 'time',
+                title: '员工考勤管理',
+                access: 0,
+                name: 'hr_time',
+                component: () =>
+                    import ('@/views/hr-time/index.vue')
+            },
+            {
+                path: 'salary',
+                title: '员工薪资管理',
+                access: 0,
+                name: 'hr_salary',
+                component: () =>
+                    import ('@/views/hr-salary/index.vue')
             }
         ]
     },
@@ -141,15 +174,31 @@ export const appRouter = [{
         icon: 'ios-cog',
         name: 'news',
         title: '官网新闻管理',
-        // access: 0,
+        access: 0,
         component: Main,
         children: [{
             path: 'index',
             title: '官网新闻列表',
-            // access: 0,
+            access: 0,
             name: 'news_index',
             component: () =>
                 import ('@/views/news/index.vue')
+        }]
+    },
+    {
+        path: '/canteen',
+        icon: 'ios-cog',
+        name: 'canteen',
+        title: '公司食堂管理',
+        access: 0,
+        component: Main,
+        children: [{
+            path: 'index',
+            title: '公司食堂管理',
+            access: 0,
+            name: 'canteen_index',
+            component: () =>
+                import ('@/views/canteen/index.vue')
         }]
     },
     {
@@ -157,12 +206,12 @@ export const appRouter = [{
         icon: 'ios-cog',
         name: 'contract',
         title: '计划合同管理',
-        // access: 0,
+        access: 0,
         component: Main,
         children: [{
                 path: 'material',
                 title: '物资信息管理',
-                // access: 0,
+                access: 0,
                 name: 'contract_material',
                 component: () =>
                     import ('@/views/contract-material/index.vue')
@@ -170,7 +219,7 @@ export const appRouter = [{
             {
                 path: 'in',
                 title: '物资入库管理',
-                // access: 0,
+                access: 0,
                 name: 'contract_in',
                 component: () =>
                     import ('@/views/contract-in/index.vue')
@@ -178,7 +227,7 @@ export const appRouter = [{
             {
                 path: 'out',
                 title: '物资出库管理',
-                // access: 0,
+                access: 0,
                 name: 'contract_out',
                 component: () =>
                     import ('@/views/contract-out/index.vue')
@@ -186,7 +235,7 @@ export const appRouter = [{
             {
                 path: 'tender',
                 title: '招标合同管理',
-                // access: 0,
+                access: 0,
                 name: 'contract_tender',
                 component: () =>
                     import ('@/views/contract-tender/index.vue')

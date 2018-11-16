@@ -18,7 +18,7 @@ fs.open('./build/env.js', 'w', function(err, fd) {
 
 module.exports = merge(webpackBaseConfig, {
     output: {
-        publicPath: 'http://h5.laundry.xmulife.com/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名 正式
+        publicPath: 'http://47.95.201.230/zjy/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名 正式
         // publicPath: 'http://test.m.xmulife.com/washRoom/dist/',  // 测试
         // publicPath: 'http://test.m.xmulife.com/myWashRoom/dist/',  // 测试
         filename: '[name].[hash].js',

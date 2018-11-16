@@ -12,27 +12,14 @@ export default {
     this.getData();
   },
   data() {
-    // 权限名称对应操作按钮，与数据库中资源名称一致
-    // 是否显示删除
-    const showDel = Util.showThisRoute(JSON.parse(Cookies.get('permission')), 'permission_resource_del') ? 'inline-block' : 'none';
-    // 是否显示新增按钮、编辑提交按钮
-    const showEdit= Util.showThisRoute(JSON.parse(Cookies.get('permission')), 'permission_resource_edit') ? 'inline-block' : 'none';
-    const valideRePassword = (rule, value, callback) => {
-      if (value !== this.formValidate.newPassword) {
-          callback(new Error('两次输入密码不一致'));
-      } else {
-          callback();
-      }
-    };
     return {
-      showEdit,
       editResource: false, // 新增、修改角色框是否出现
       formValidate: {
+          id: '',
           level: 0, // 0顶级权限 1二级权限
           name: '', // 权限名称
           parentId: 0, // 父极权限id
           url: '',  //对应页面资源
-          value: '' // 权限code
       },
       ruleValidate: {
           name: [
@@ -40,9 +27,6 @@ export default {
           ],
           url: [
               { required: true, message: '请输入页面资源名称', trigger: 'blur' }
-          ],
-          value: [
-              { required: true, message: '请输入权限code', trigger: 'blur' }
           ],
           parentId: [
               { required: true, message: '请输入父级权限id', trigger: 'blur' }
@@ -61,8 +45,6 @@ export default {
             return h(permissionResourceExpand, {
               props: {
                 row: params.row.list,
-                showEdit,
-                showDel
               }
             });
           }
@@ -72,30 +54,8 @@ export default {
           key: 'name'
         },
         {
-          title: '模块ID',
-          key: 'id'
-        },
-        {
-          title: 'value',
-          key: 'value'
-        },
-        {
           title: 'url',
           key: 'url'
-        },
-        {
-          title: '创建时间',
-          key: 'createTime',
-          render: (h, params) => {
-            return h('div', new Date(parseInt(params.row.createTime)).toLocaleString())
-          }
-        },
-        {
-          title: '更新时间',
-          key: 'updateTime',
-          render: (h, params) => {
-            return h('div', new Date(parseInt(params.row.updateTime)).toLocaleString())
-          }
         },
         {
           title: '操作',
@@ -110,7 +70,7 @@ export default {
                 },
                 style: {
                   marginRight: '5px',
-                  display: showEdit
+                  display: 'inline-block'
                 },
                 on: {
                   click: () => {
@@ -125,7 +85,7 @@ export default {
                 },
                 style: {
                   marginRight: '5px',
-                  display: showDel
+                  display: 'inline-block'
                 },
                 on: {
                   click: () => {
@@ -143,6 +103,7 @@ export default {
     ...mapGetters([
       'permissionResourceData',
       'permissionResourceAdd',
+      'permissionResourceEdit',
       'permissionResourceDel'
     ])
   },
@@ -150,16 +111,17 @@ export default {
     ...mapActions([
       'permissionResourceGetData',
       'permissionResourceGetAdd',
+      'permissionResourceGetEdit',
       'permissionResourceGetDel'
     ]),
 
     handleAdd() {
       this.formValidate = {
+        id: '',
         level: '', // 0顶级权限 1二级权限
         name: '', // 权限名称
         parentId: '', // 父极权限id
         url: '',  //对应页面资源
-        value: '' // 权限code
       },
       this.editResource = true;
     },
@@ -167,10 +129,11 @@ export default {
     saveEdit (name) {
         this.$refs[name].validate(async (valid) => {
             if (valid) {
+              if (!this.formValidate.id) {
                 this.modal_loading = true;
                 await this.permissionResourceGetAdd(this.formValidate);
 
-                if (this.permissionResourceAdd && this.permissionResourceAdd.code == 0) {
+                if (this.permissionResourceAdd && this.permissionResourceAdd.code) {
                     this.$Notice.warning({
                         title: this.permissionResourceAdd.info
                     });
@@ -181,6 +144,22 @@ export default {
                     this.$Message.success('编辑资源成功');
                     await this.getData();
                 }
+              } else {
+                this.modal_loading = true;
+                await this.permissionResourceGetEdit(this.formValidate);
+
+                if (this.permissionResourceEdit && this.permissionResourceEdit.code) {
+                    this.$Notice.warning({
+                        title: this.permissionResourceEdit.info
+                    });
+                    this.modal_loading = false;
+                } else {
+                    this.modal_loading = false;
+                    this.editResource = false;
+                    this.$Message.success('编辑资源成功');
+                    await this.getData();
+                }
+              }
             }
         });
     },
@@ -196,7 +175,7 @@ export default {
         okText: '确定',
         onOk: async () => {
           await this.permissionResourceGetDel(params);
-         if (this.permissionResourceDel && this.permissionResourceDel.code == 1) {
+         if (this.permissionResourceDel && !this.permissionResourceDel.code) {
            this.$Message.success('删除成功');
            await this.getData();
          } else {
@@ -208,12 +187,6 @@ export default {
       })
     },
 
-    // 页数改变重新获取
-    async pageNumChange(pageNum) {
-      this.page.pageNum = pageNum;
-      this.getData();
-    },
-
     // 查看修改角色信息
     showAndEdit(row) {
       this.formValidate = {
@@ -222,25 +195,16 @@ export default {
         name: row.name, // 权限名称
         parentId: row.parentId, // 父极权限id
         url: row.url,  //对应页面资源
-        value: row.value // 权限code
       };
       this.editResource = true;
-    },
-
-    // 每页大小改变，要手动去改变页面大小参数
-    pageSizeChange(pageSize) {
-      this.page.pageSize = pageSize;
-      if (this.page.pageNum === 1) {
-        this.getData();
-      }
     },
 
     // 获取数据的统一方法
     async getData() {
       await this.permissionResourceGetData();
-      if (this.permissionResourceData && this.permissionResourceData.code == 0) {
+      if (this.permissionResourceData && this.permissionResourceData.code) {
         this.$Notice.warning({
-          title: this.permissionResourceData.info
+          title: this.permissionResourceData.data
         })
       }
     }

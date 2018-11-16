@@ -140,21 +140,21 @@ export default {
                   }
                 }
               }, '编辑'),
-              h('Button', {
-                props: {
-                  type: 'success',
-                  size: 'default'
-                },
-                style: {
-                  marginRight: '5px',
-                  display: 'inline-block'
-                },
-                on: {
-                  click: () => {
-                    this.editPassword(params.row);
-                  }
-                }
-              }, '重置密码'),
+              // h('Button', {
+              //   props: {
+              //     type: 'success',
+              //     size: 'default'
+              //   },
+              //   style: {
+              //     marginRight: '5px',
+              //     display: 'inline-block'
+              //   },
+              //   on: {
+              //     click: () => {
+              //       this.editPassword(params.row);
+              //     }
+              //   }
+              // }, '重置密码'),
               h('Button', {
                 props: {
                   type: 'error',

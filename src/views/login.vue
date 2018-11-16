@@ -88,18 +88,12 @@ export default {
           if (this.loginData.code) {
             this.$Message.warning(this.loginData.info);
           } else {
-            Cookies.set("user", this.loginData.data);
-            // Cookies.set("userRole", this.loginData.data.userRole);
-            // Cookies.set('laundry', this.loginData.data.laundry);
-            
+            Cookies.set("user", this.loginData.data);            
 
             /* 权限控制的代码，后期放开 */
-            // const arr = [];
-            // this.loginData.data.permission.forEach((item) => {
-            //   arr.push(item.url);
-            // });
-            // await this.loginGetPermission(arr);
-            // Cookies.set("permission", arr);
+            const arr = [].concat(this.loginData.data.permission);
+            await this.loginGetPermission(arr);
+            Cookies.set("permission", arr);
     
             this.$router.push({
               name: 'home_index'

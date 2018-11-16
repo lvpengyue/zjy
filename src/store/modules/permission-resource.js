@@ -11,11 +11,13 @@ const state = {
      */
     data: '',
     del: '', // 删除资源结果
-    add: '' // 新增、编辑资源结果
+    add: '', // 新增、编辑资源结果
+    edit: '' // 新增、编辑资源结果
 };
 
 const PERMISSION_RESOURCE_SET_DATA = 'PERMISSION_RESOURCE_SET_DATA';
 const PERMISSION_RESOURCE_SET_ADD = 'PERMISSION_RESOURCE_SET_ADD';
+const PERMISSION_RESOURCE_SET_EDIT = 'PERMISSION_RESOURCE_SET_EDIT';
 const PERMISSION_RESOURCE_SET_DEL = 'PERMISSION_RESOURCE_SET_DEL';
 
 const mutations = {
@@ -36,6 +38,15 @@ const mutations = {
      */
     [PERMISSION_RESOURCE_SET_ADD](state, mutation) {
         state.add = mutation.payload;
+    },
+
+    /**
+     * 编辑资源数据
+     * @param {Object} state state
+     * @param {FSA} mutation mutation
+     */
+    [PERMISSION_RESOURCE_SET_EDIT](state, mutation) {
+        state.edit = mutation.payload;
     },
 
     /**
@@ -61,7 +72,7 @@ const actions = {
     }, params) {
         try {
             const response = await dispatch('$apisCall', {
-                config: $apiConf.ERP_PERMISSION_LIST,
+                config: $apiConf.RESOURCE_GET,
                 params: params
             });
 
@@ -86,12 +97,37 @@ const actions = {
     }, params) {
         try {
             const response = await dispatch('$apisCall', {
-                config: $apiConf.ERP_ADD_PERMISSION,
-                params: params
+                config: $apiConf.RESOURCE_ADD,
+                params: JSON.stringify(params)
             });
 
             commit({
                 type: PERMISSION_RESOURCE_SET_ADD,
+                payload: response
+            });
+        } catch (error) {
+            console.log(`新增/编辑资源失败:${error.code}`);
+        }
+    },
+
+    /**
+     * 调用编辑资源接口
+     * @param {Object} context context
+     * @param {Object} params contact content type
+     */
+    async permissionResourceGetEdit({
+        commit,
+        dispatch,
+        state
+    }, params) {
+        try {
+            const response = await dispatch('$apisCall', {
+                config: $apiConf.RESOURCE_EDIT,
+                params: JSON.stringify(params)
+            });
+
+            commit({
+                type: PERMISSION_RESOURCE_SET_EDIT,
                 payload: response
             });
         } catch (error) {
@@ -111,7 +147,7 @@ const actions = {
     }, params) {
         try {
             const response = await dispatch('$apisCall', {
-                config: $apiConf.ERP_DELETE_PERMISSION,
+                config: $apiConf.RESOURCE_DELETE,
                 params: params
             });
 
@@ -143,6 +179,15 @@ const getters = {
      */
     permissionResourceAdd(state) {
         return state.add;
+    },
+
+    /**
+     * 编辑资源
+     * @param {Object} state state
+     * @return {Object} add 新增
+     */
+    permissionResourceEdit(state) {
+        return state.edit;
     },
 
     /**

@@ -108,7 +108,7 @@ const actions = {
     }, params) {
         try {
             const response = await dispatch('$apisCall', {
-                config: $apiConf.ERP_ALLOCATE_PERMISSION,
+                config: $apiConf.ROLE_ALLOCATE,
                 params: params
             });
 
